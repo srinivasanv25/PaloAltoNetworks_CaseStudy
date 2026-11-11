@@ -1,37 +1,40 @@
 # PaloAltoNetworks_CaseStudy
 
-TechGlobal is a fictional global enterprise software company. Its Accounts Payable (AP) organization processes thousands of supplier invoices across multiple business units, legal entities, and geographical regions.
-Suppliers submit invoices through shared email addresses such as invoices@techglobal.example.
-These emails may contain PDF invoices, scanned documents, image attachments, multiple invoices, or other supplier correspondence. Invoice layouts and formats vary significantly between suppliers.
+**#Company**
+TechGlobal is a fictional global enterprise software company. Its Accounts Payable (AP) organization processes thousands of supplier invoices across multiple business units, legal entities, and geographical regions. Suppliers submit invoices through shared email addresses such as invoices@techglobal.example.These emails may contain PDF invoices, scanned documents, image attachments, multiple invoices, or other supplier correspondence. Invoice layouts and formats vary significantly between suppliers.
+**#Current State**
 Today, AP specialists manually perform several activities:
 Invoice intake: Monitor shared mailboxes, identify invoices, retrieve attachments, and determine whether an invoice has already been received.
-Data extraction: Read invoice documents and extract supplier details, invoice numbers, dates, currency, amounts, taxes, and line items.
-Data enrichment: Retrieve additional information from enterprise systems, including supplier master data, purchase orders, organizational information, and payment terms.
-Transformation and validation: Normalize extracted values, apply business rules, reconcile amounts, and verify purchase-order eligibility.
-Exception management: Investigate missing information, ambiguous supplier identities, mismatched purchase orders, and other discrepancies.
-Invoice submission: Prepare and submit validated invoice records into the company's enterprise Procure-to-Pay (P2P) platform.
-Tracking and audit: Monitor processing status, resolve downstream errors, and retain evidence of invoice-processing decisions.
+1. Data extraction: Read invoice documents and extract supplier details, invoice numbers, dates, currency, amounts, taxes, and line items.
+2. Data enrichment: Retrieve additional information from enterprise systems, including supplier master data, purchase orders, organizational information, and payment terms.
+3. Transformation and validation: Normalize extracted values, apply business rules, reconcile amounts, and verify purchase-order eligibility.
+4. Exception management: Investigate missing information, ambiguous supplier identities, mismatched purchase orders, and other discrepancies.
+5. Invoice submission: Prepare and submit validated invoice records into the company's enterprise Procure-to-Pay (P2P) platform.
+6. Tracking and audit: Monitor processing status, resolve downstream errors, and retain evidence of invoice-processing decisions.
 This process is labor-intensive, inconsistent across teams, difficult to scale during high-volume periods, and dependent on manual interpretation of documents and enterprise data.
+**#Desired State**
 TechGlobal wants to develop Invoice Flow, an AI-assisted invoice-processing platform that can automate routine invoice processing while maintaining financial accuracy, explainability, and appropriate human oversight.
 The long-term goal is to support straight-through processing for invoices that can be reliably validated, while routing ambiguous or noncompliant invoices to AP specialists for review.
-3. Your Task
+
+**#Your Task**
+
 Design the technical architecture and build a working prototype demonstrating the core execution flow for Invoice Flow.
 Your solution should address how the platform can:
-Receive and process invoice submissions originating from a shared email mailbox.
-Identify relevant invoice documents and extract structured information from varying document formats.
-Normalize invoice data into a consistent internal representation.
-Enrich extracted information using existing enterprise systems.
-Apply deterministic accounting, supplier, and purchase-order validation rules.
-Determine whether an invoice can proceed automatically or requires human intervention.
-Capture human corrections and resume processing without losing previously completed work.
-Submit validated invoices into a downstream enterprise P2P platform.
-Handle duplicate events, partial failures, retries, and uncertain downstream outcomes.
-Preserve sufficient evidence, workflow history, and data lineage to explain how each invoice was processed.
+a. Receive and process invoice submissions originating from a shared email mailbox.
+b. Identify relevant invoice documents and extract structured information from varying document formats.
+c. Normalize invoice data into a consistent internal representation.
+d. Enrich extracted information using existing enterprise systems.
+e. Apply deterministic accounting, supplier, and purchase-order validation rules.
+f. Determine whether an invoice can proceed automatically or requires human intervention.
+g. Capture human corrections and resume processing without losing previously completed work.
+h. Submit validated invoices into a downstream enterprise P2P platform.
+i. Handle duplicate events, partial failures, retries, and uncertain downstream outcomes.
+j. Preserve sufficient evidence, workflow history, and data lineage to explain how each invoice was processed.
 Your design should demonstrate clear separation between AI-assisted interpretation, deterministic business logic, enterprise data access, workflow orchestration, and downstream system mutations.
 There is no prescribed AI agent framework, orchestration product, document-processing provider, database, or integration platform.
 Choose the architecture and technologies you believe are appropriate, and explain the trade-offs.
 
-4. Existing Enterprise Systems and Business Rules
+**#Existing Enterprise Systems and Business Rules**
 Assume TechGlobal already operates several enterprise systems that Invoice Flow must integrate with.
 You do not need access to real enterprise systems. Create representative mock APIs, services, or datasets for your prototype.
 4.1 Supplier Master
@@ -56,7 +59,7 @@ Approved supplier payment terms
 default_currency
 Default transaction currency
 
-Business rules:
+**#Business rules:**
 Every invoice must resolve to an approved and active supplier before submission.
 Supplier names on invoices may differ from registered legal names.
 Matching by name alone may be insufficient when multiple supplier records are plausible.
@@ -82,7 +85,7 @@ Approved goods or services, quantities, and unit prices
 remaining_balance
 Amount available for additional invoicing
 
-Business rules:
+**#Business rules:**
 PO-backed invoices must reference an existing, open purchase order.
 The invoice supplier, legal entity, and currency must match the purchase order.
 Invoice line items must be reconciled against the corresponding PO lines.
@@ -178,7 +181,6 @@ How the processing workflow resumes without restarting unrelated successful step
 Important: Extraction confidence alone is not sufficient to authorize invoice submission. A highly confident extraction may still violate financial or procurement business rules.
 The AI system may propose values, matches, or resolutions, but must not bypass required deterministic validations or human approvals.
 A production-quality review interface is not required for the prototype. A simple API, command-line interaction, or minimal UI is acceptable.
-
 
 
 
